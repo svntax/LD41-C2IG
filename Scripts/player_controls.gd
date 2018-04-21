@@ -10,9 +10,12 @@ export (int) var BRAKE_AMOUNT = 4
 
 #For switching between both movement controls
 var VEHICLE_MODE = false
+var walkingSprite
+var vehicleSprite
 
 func _ready():
-    pass
+    walkingSprite = get_parent().find_node("WalkingSprite")
+    vehicleSprite = get_parent().find_node("VehicleSprite")
 
 #General update loop
 func _process(delta):
@@ -20,9 +23,13 @@ func _process(delta):
         if(VEHICLE_MODE):
             #Get out of the vehicle, back to walking
             VEHICLE_MODE = false
+            walkingSprite.show()
+            vehicleSprite.hide()
         else:
             #TODO only if near vehicle, for now just a simple toggle
             VEHICLE_MODE = true
+            vehicleSprite.show()
+            walkingSprite.hide()
 
 #Update loop for handling anything physics related
 func _physics_process(delta):

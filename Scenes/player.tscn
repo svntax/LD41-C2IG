@@ -1,12 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/player_controls.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/kart.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 32, 32 )
+extents = Vector2( 20, 13 )
 
 [node name="PlayerRoot" type="Node2D" index="0"]
 
@@ -29,7 +30,7 @@ can_sleep = true
 linear_velocity = Vector2( 0, 0 )
 linear_damp = 4.0
 angular_velocity = 0.0
-angular_damp = 4.0
+angular_damp = 8.0
 script = ExtResource( 1 )
 _sections_unfolded = [ "Angular", "Linear" ]
 WALK_SPEED = 10
@@ -43,9 +44,17 @@ shape = SubResource( 1 )
 
 [node name="WalkingSprite" type="Sprite" parent="PlayerRigidBody" index="1"]
 
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
 
-[node name="Camera2D" type="Camera2D" parent="PlayerRigidBody" index="2"]
+[node name="VehicleSprite" type="Sprite" parent="PlayerRigidBody" index="2"]
+
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Camera2D" type="Camera2D" parent="PlayerRigidBody" index="3"]
 
 anchor_mode = 1
 rotating = false

@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
-[ext_resource path="res://Scenes/pause_menu_ui.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/pause_menu_ui.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/wall.tscn" type="PackedScene" id=3]
 
 [node name="Game" type="Node2D"]
 
@@ -10,25 +10,7 @@
 
 position = Vector2( 158.667, 131.944 )
 
-[node name="Sprite" type="Sprite" parent="." index="1"]
-
-position = Vector2( 117.856, 362.182 )
-scale = Vector2( 0.403447, 0.727701 )
-texture = ExtResource( 2 )
-
-[node name="Sprite2" type="Sprite" parent="." index="2"]
-
-position = Vector2( 309.395, 278.75 )
-scale = Vector2( 1.4155, 0.665066 )
-texture = ExtResource( 2 )
-
-[node name="Sprite3" type="Sprite" parent="." index="3"]
-
-position = Vector2( 282.561, 193.622 )
-scale = Vector2( 0.634774, 0.665065 )
-texture = ExtResource( 2 )
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="4"]
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="1"]
 
 layer = 1
 offset = Vector2( 0, 0 )
@@ -36,11 +18,39 @@ rotation = 0.0
 scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
-[node name="PauseMenuUI" parent="CanvasLayer" index="0" instance=ExtResource( 3 )]
+[node name="PauseMenuUI" parent="CanvasLayer" index="0" instance=ExtResource( 2 )]
 
 margin_left = 229.0
 margin_top = 140.0
 margin_right = 411.0
 margin_bottom = 180.0
+
+[node name="Wall" parent="." index="2" instance=ExtResource( 3 )]
+
+position = Vector2( 186.616, 265.191 )
+
+[node name="Wall2" parent="." index="3" instance=ExtResource( 3 )]
+
+position = Vector2( 216.616, 265.191 )
+
+[node name="Wall3" parent="." index="4" instance=ExtResource( 3 )]
+
+position = Vector2( 246.616, 265.191 )
+
+[node name="Wall4" parent="." index="5" instance=ExtResource( 3 )]
+
+position = Vector2( 276.616, 265.191 )
+
+[node name="Wall5" parent="." index="6" instance=ExtResource( 3 )]
+
+position = Vector2( 306.616, 265.191 )
+
+[node name="Wall6" parent="." index="7" instance=ExtResource( 3 )]
+
+position = Vector2( 306.616, 235.191 )
+
+[node name="Wall7" parent="." index="8" instance=ExtResource( 3 )]
+
+position = Vector2( 306.616, 205.191 )
 
 
