@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/pause_menu_ui.tscn" type="PackedScene" id=2]
+
+[node name="Game" type="Node2D" index="0"]
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+position = Vector2( 385.05, 137.359 )
+texture = ExtResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="." index="1"]
+
+anchor_mode = 0
+rotating = false
+current = false
+zoom = Vector2( 1, 1 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = false
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+
+[node name="PauseMenuUI" parent="." index="2" instance=ExtResource( 2 )]
+
+visible = false
+margin_left = 229.0
+margin_top = 140.0
+margin_right = 411.0
+margin_bottom = 180.0
+
+
