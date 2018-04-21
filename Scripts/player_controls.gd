@@ -16,6 +16,7 @@ var vehicleSprite
 func _ready():
     walkingSprite = get_parent().find_node("WalkingSprite")
     vehicleSprite = get_parent().find_node("VehicleSprite")
+    self.mode = RigidBody2D.MODE_CHARACTER
 
 #General update loop
 func _process(delta):
@@ -23,11 +24,13 @@ func _process(delta):
         if(VEHICLE_MODE):
             #Get out of the vehicle, back to walking
             VEHICLE_MODE = false
+            self.mode = RigidBody2D.MODE_CHARACTER
             walkingSprite.show()
             vehicleSprite.hide()
         else:
             #TODO only if near vehicle, for now just a simple toggle
             VEHICLE_MODE = true
+            self.mode = RigidBody2D.MODE_RIGID
             vehicleSprite.show()
             walkingSprite.hide()
 
