@@ -1,43 +1,43 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
-[ext_resource path="res://Scenes/pause_menu_ui.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/pause_menu_ui.tscn" type="PackedScene" id=3]
 
-[node name="Game" type="Node2D" index="0"]
+[node name="Game" type="Node2D"]
 
-[node name="Sprite" type="Sprite" parent="." index="0"]
+[node name="PlayerRoot" parent="." index="0" instance=ExtResource( 1 )]
 
-position = Vector2( 385.05, 137.359 )
-texture = ExtResource( 1 )
+position = Vector2( 158.667, 131.944 )
 
-[node name="Camera2D" type="Camera2D" parent="." index="1"]
+[node name="Sprite" type="Sprite" parent="." index="1"]
 
-anchor_mode = 0
-rotating = false
-current = false
-zoom = Vector2( 1, 1 )
-limit_left = -10000000
-limit_top = -10000000
-limit_right = 10000000
-limit_bottom = 10000000
-limit_smoothed = false
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
-smoothing_enabled = false
-smoothing_speed = 5.0
-offset_v = 0.0
-offset_h = 0.0
-drag_margin_left = 0.2
-drag_margin_top = 0.2
-drag_margin_right = 0.2
-drag_margin_bottom = 0.2
-editor_draw_screen = true
-editor_draw_limits = false
-editor_draw_drag_margin = false
+position = Vector2( 117.856, 362.182 )
+scale = Vector2( 0.403447, 0.727701 )
+texture = ExtResource( 2 )
 
-[node name="PauseMenuUI" parent="." index="2" instance=ExtResource( 2 )]
+[node name="Sprite2" type="Sprite" parent="." index="2"]
 
-visible = false
+position = Vector2( 309.395, 278.75 )
+scale = Vector2( 1.4155, 0.665066 )
+texture = ExtResource( 2 )
+
+[node name="Sprite3" type="Sprite" parent="." index="3"]
+
+position = Vector2( 282.561, 193.622 )
+scale = Vector2( 0.634774, 0.665065 )
+texture = ExtResource( 2 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="4"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="PauseMenuUI" parent="CanvasLayer" index="0" instance=ExtResource( 3 )]
+
 margin_left = 229.0
 margin_top = 140.0
 margin_right = 411.0
