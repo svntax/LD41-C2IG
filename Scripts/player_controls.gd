@@ -55,6 +55,8 @@ func _process(delta):
 #Update loop for handling anything physics related
 func _physics_process(delta):
     if(VEHICLE_MODE):
+        #Make sure the invisible player object follows the vehicle
+        kinematicBody.global_position = vehicleBody.global_position
         #Driving controls, uses apply_impulse() at different offsets
         #depending on whether the player is steering left and right
         #or just accelerating or braking
