@@ -1,7 +1,9 @@
 extends RigidBody2D
 
 #Walking constants, adjustable
-export (int) var WALK_SPEED = 10
+export (int) var WALK_SPEED = 64
+
+var walkVel = Vector2()
 
 #Vehicle constants, adjustable
 export (int) var STEERING_SPEED = 8
@@ -10,13 +12,20 @@ export (int) var BRAKE_AMOUNT = 4
 
 #For switching between both movement controls
 var VEHICLE_MODE = false
+var MIN_DIST = 48
 var walkingSprite
 var vehicleSprite
+var personCamera
+var vehicleCamera
+var kinematicBody
 
 func _ready():
     walkingSprite = get_parent().find_node("WalkingSprite")
     vehicleSprite = get_parent().find_node("VehicleSprite")
-    self.mode = RigidBody2D.MODE_CHARACTER
+    kinematicBody = get_parent().get_parent().find_node("PlayerKinematicBody")
+    personCamera = get_parent().find_node("PersonCamera")
+    vehicleCamera = find_node("VehicleCamera")
+    #self.mode = RigidBody2D.MODE_KINEMATIC
 
 #General update loop
 func _process(delta):
@@ -24,15 +33,21 @@ func _process(delta):
         if(VEHICLE_MODE):
             #Get out of the vehicle, back to walking
             VEHICLE_MODE = false
-            self.mode = RigidBody2D.MODE_CHARACTER
+            #self.mode = RigidBody2D.MODE_KINEMATIC
             walkingSprite.show()
-            vehicleSprite.hide()
+            kinematicBody.set_collision_layer_bit(1, 1)
+            personCamera.make_current()
+            kinematicBody.position = self.position
         else:
-            #TODO only if near vehicle, for now just a simple toggle
-            VEHICLE_MODE = true
-            self.mode = RigidBody2D.MODE_RIGID
-            vehicleSprite.show()
-            walkingSprite.hide()
+            #Only if near vehicle
+            var dist = self.position.distance_to(kinematicBody.position)
+            print(dist)
+            if(dist < MIN_DIST):
+                VEHICLE_MODE = true
+                #self.mode = RigidBody2D.MODE_RIGID
+                walkingSprite.hide()
+                kinematicBody.set_collision_layer_bit(1, 0)
+                vehicleCamera.make_current()
 
 #Update loop for handling anything physics related
 func _physics_process(delta):
@@ -54,12 +69,17 @@ func _physics_process(delta):
             #TODO brake
             pass
     else:
+        walkVel.x = 0
+        walkVel.y = 0
         #Walking controls, uses apply_impulse() with an offset of (0, 0)
         if(Input.is_action_pressed("WALK_LEFT")):
-            self.apply_impulse(Vector2(0, 0), Vector2(-WALK_SPEED, 0))
+            walkVel.x = -WALK_SPEED
         if(Input.is_action_pressed("WALK_RIGHT")):
-            self.apply_impulse(Vector2(0, 0), Vector2(WALK_SPEED, 0))
+            walkVel.x = WALK_SPEED
         if(Input.is_action_pressed("WALK_UP")):
-            self.apply_impulse(Vector2(0, 0), Vector2(0, -WALK_SPEED))
+            walkVel.y = -WALK_SPEED
         if(Input.is_action_pressed("WALK_DOWN")):
-            self.apply_impulse(Vector2(0, 0), Vector2(0, WALK_SPEED))
+            walkVel.y = WALK_SPEED
+        #kinematicBody.move(Vector2(walkVel.x, 0))
+        #kinematicBody.move(Vector2(0, walkVel.y))
+        kinematicBody.move_and_slide(walkVel)
