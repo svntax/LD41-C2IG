@@ -1,11 +1,15 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Sprites/kart.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/vehicle_randomizer.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/vehicle01.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/vehicle02.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/vehicle03.png" type="Texture" id=4]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="CapsuleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 22, 13 )
+radius = 14.0
+height = 16.0
 
 [node name="VehicleRigidBody" type="RigidBody2D" groups=[
 "vehicles",
@@ -26,22 +30,39 @@ contact_monitor = false
 sleeping = false
 can_sleep = true
 linear_velocity = Vector2( 0, 0 )
-linear_damp = 3.0
+linear_damp = 2.0
 angular_velocity = 0.0
 angular_damp = 6.0
+script = ExtResource( 1 )
 _sections_unfolded = [ "Angular", "Collision", "Linear" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
 
+rotation = 1.5708
 shape = SubResource( 1 )
-
-[node name="VehicleSprite" type="Sprite" parent="." index="1"]
-
-scale = Vector2( 2, 2 )
-texture = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="VehicleCamera" type="Camera2D" parent="." index="2"]
+[node name="VehicleSprite01" type="Sprite" parent="." index="1"]
+
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="VehicleSprite02" type="Sprite" parent="." index="2"]
+
+visible = false
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="VehicleSprite03" type="Sprite" parent="." index="3"]
+
+visible = false
+scale = Vector2( 2, 2 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="VehicleCamera" type="Camera2D" parent="." index="4"]
 
 anchor_mode = 1
 rotating = false

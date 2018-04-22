@@ -46,6 +46,10 @@ func _process(delta):
                     kinematicBody.set_collision_layer_bit(0, 0)
                     vehicleBody = v
                     vehicleBody.find_node("VehicleCamera").make_current()
+                    #Change the current stats to be used for vehicle controls
+                    STEERING_SPEED = vehicleBody.getSteeringStat()
+                    ACCELERATION = vehicleBody.getAccelStat()
+                    BRAKE_AMOUNT = vehicleBody.getBrakingStat()
                     break
 
 #Update loop for handling anything physics related
@@ -65,7 +69,9 @@ func _physics_process(delta):
             var vy = sin(vehicleBody.rotation) * ACCELERATION
             vehicleBody.apply_impulse(Vector2(0, 0), Vector2(vx, vy))
         if(Input.is_action_pressed("BRAKE")):
-            #TODO brake
+            var vx = cos(vehicleBody.rotation) * BRAKE_AMOUNT
+            var vy = sin(vehicleBody.rotation) * BRAKE_AMOUNT
+            vehicleBody.apply_impulse(Vector2(0, 0), Vector2(-vx, -vy))
             pass
     else:
         walkVel.x = 0
