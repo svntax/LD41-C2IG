@@ -44,8 +44,8 @@ class Miner:
         self.y = abs(int(self.y) % int(self.boundY));
         
 func mineGrid():
-    var maxSteps = 500;
-    var spawnChance = 10;
+    var maxSteps = 450;
+    var spawnChance = 5;
     var miner1 = Miner.new(floor(len(binaryGrid)/2), floor(len(binaryGrid[0])/2), len(binaryGrid), len(binaryGrid[0]));
     miners.append(miner1);
     for i in range(0, maxSteps):
@@ -192,7 +192,7 @@ func _ready():
     #print("Random Index in region:", regionLabel, "is", randomIndex);
     calculateDistances(regionLabel, randomIndex);
     var player = get_parent().find_node("PlayerRoot").find_node("PlayerKinematicBody");
-    player.position = Vector2(randomIndex[0] * TILE_SIZE, randomIndex[1] * TILE_SIZE);
+    player.global_position = Vector2(randomIndex[0] * TILE_SIZE, randomIndex[1] * TILE_SIZE);
     #for col in binaryGrid:
     #    print(col);
     
