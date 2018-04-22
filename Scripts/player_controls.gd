@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends KinematicBody2D
 
 #Walking constants, adjustable
 export (int) var WALK_SPEED = 64
@@ -14,18 +14,15 @@ export (int) var BRAKE_AMOUNT = 4
 var VEHICLE_MODE = false
 var MIN_DIST = 48
 var walkingSprite
-var vehicleSprite
 var personCamera
-var vehicleCamera
 var kinematicBody
+var vehicleBody
 
 func _ready():
     walkingSprite = get_parent().find_node("WalkingSprite")
-    vehicleSprite = get_parent().find_node("VehicleSprite")
-    kinematicBody = get_parent().get_parent().find_node("PlayerKinematicBody")
-    personCamera = get_parent().find_node("PersonCamera")
-    vehicleCamera = find_node("VehicleCamera")
-    #self.mode = RigidBody2D.MODE_KINEMATIC
+    kinematicBody = self
+    personCamera = find_node("PersonCamera")
+    vehicleBody = null
 
 #General update loop
 func _process(delta):
@@ -33,21 +30,23 @@ func _process(delta):
         if(VEHICLE_MODE):
             #Get out of the vehicle, back to walking
             VEHICLE_MODE = false
-            #self.mode = RigidBody2D.MODE_KINEMATIC
             walkingSprite.show()
-            kinematicBody.set_collision_layer_bit(1, 1)
+            kinematicBody.set_collision_layer_bit(0, 1)
             personCamera.make_current()
-            kinematicBody.position = self.position
+            kinematicBody.global_position = vehicleBody.global_position
         else:
             #Only if near vehicle
-            var dist = self.position.distance_to(kinematicBody.position)
-            print(dist)
-            if(dist < MIN_DIST):
-                VEHICLE_MODE = true
-                #self.mode = RigidBody2D.MODE_RIGID
-                walkingSprite.hide()
-                kinematicBody.set_collision_layer_bit(1, 0)
-                vehicleCamera.make_current()
+            var vehicleList = get_tree().get_nodes_in_group("vehicles")
+            for v in vehicleList:
+                #TODO might have to adjust if multiple vehicles nearby
+                var dist = self.global_position.distance_to(v.global_position)
+                if(dist < MIN_DIST):
+                    VEHICLE_MODE = true
+                    walkingSprite.hide()
+                    kinematicBody.set_collision_layer_bit(0, 0)
+                    vehicleBody = v
+                    vehicleBody.find_node("VehicleCamera").make_current()
+                    break
 
 #Update loop for handling anything physics related
 func _physics_process(delta):
@@ -56,15 +55,15 @@ func _physics_process(delta):
         #depending on whether the player is steering left and right
         #or just accelerating or braking
         if(Input.is_action_pressed("STEER_LEFT")):
-            self.apply_impulse(Vector2(-8, 0), Vector2(0, STEERING_SPEED))
-            self.apply_impulse(Vector2(8, 0), Vector2(0, -STEERING_SPEED))
+            vehicleBody.apply_impulse(Vector2(-8, 0), Vector2(0, STEERING_SPEED))
+            vehicleBody.apply_impulse(Vector2(8, 0), Vector2(0, -STEERING_SPEED))
         if(Input.is_action_pressed("STEER_RIGHT")):
-            self.apply_impulse(Vector2(-8, 0), Vector2(0, -STEERING_SPEED))
-            self.apply_impulse(Vector2(8, 0), Vector2(0, STEERING_SPEED))
+            vehicleBody.apply_impulse(Vector2(-8, 0), Vector2(0, -STEERING_SPEED))
+            vehicleBody.apply_impulse(Vector2(8, 0), Vector2(0, STEERING_SPEED))
         if(Input.is_action_pressed("DRIVE_FORWARD")):
-            var vx = cos(self.rotation) * ACCELERATION
-            var vy = sin(self.rotation) * ACCELERATION
-            self.apply_impulse(Vector2(0, 0), Vector2(vx, vy))
+            var vx = cos(vehicleBody.rotation) * ACCELERATION
+            var vy = sin(vehicleBody.rotation) * ACCELERATION
+            vehicleBody.apply_impulse(Vector2(0, 0), Vector2(vx, vy))
         if(Input.is_action_pressed("BRAKE")):
             #TODO brake
             pass
@@ -80,6 +79,4 @@ func _physics_process(delta):
             walkVel.y = -WALK_SPEED
         if(Input.is_action_pressed("WALK_DOWN")):
             walkVel.y = WALK_SPEED
-        #kinematicBody.move(Vector2(walkVel.x, 0))
-        #kinematicBody.move(Vector2(0, walkVel.y))
         kinematicBody.move_and_slide(walkVel)
