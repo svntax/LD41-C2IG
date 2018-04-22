@@ -8,7 +8,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 15, 15 )
 
-[node name="PlayerRoot" type="Node2D"]
+[node name="PlayerRoot" type="Node2D" index="0"]
 
 [node name="PlayerKinematicBody" type="KinematicBody2D" parent="." index="0"]
 
