@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 #Walking constants, adjustable
-export (int) var WALK_SPEED = 64
+export (int) var WALK_SPEED = 96
 
 var walkVel = Vector2()
 
@@ -18,11 +18,15 @@ var personCamera
 var kinematicBody
 var vehicleBody
 
+var animationPlayer
+
 func _ready():
-    walkingSprite = get_parent().find_node("WalkingSprite")
+    #walkingSprite = get_parent().find_node("WalkingSprite")
+    walkingSprite = find_node("AnimatedSprite")
     kinematicBody = self
     personCamera = find_node("PersonCamera")
     vehicleBody = null
+    animationPlayer = find_node("AnimationPlayer")
 
 #General update loop
 func _process(delta):
@@ -74,17 +78,27 @@ func _physics_process(delta):
             var vx = cos(vehicleBody.rotation) * BRAKE_AMOUNT
             var vy = sin(vehicleBody.rotation) * BRAKE_AMOUNT
             vehicleBody.apply_impulse(Vector2(0, 0), Vector2(-vx, -vy))
-            pass
     else:
         walkVel.x = 0
         walkVel.y = 0
         #Walking controls, uses apply_impulse() with an offset of (0, 0)
         if(Input.is_action_pressed("WALK_LEFT")):
             walkVel.x = -WALK_SPEED
+            self.rotation_degrees = 90
         if(Input.is_action_pressed("WALK_RIGHT")):
             walkVel.x = WALK_SPEED
+            self.rotation_degrees = 270
         if(Input.is_action_pressed("WALK_UP")):
             walkVel.y = -WALK_SPEED
+            self.rotation_degrees = 180
         if(Input.is_action_pressed("WALK_DOWN")):
             walkVel.y = WALK_SPEED
+            self.rotation_degrees = 0
+        if(walkVel.x != 0 or walkVel.y != 0):
+            if(not animationPlayer.is_playing()):
+                animationPlayer.play("walkAnim", -1, 1.5)
+        else:
+            if(animationPlayer.is_playing()):
+                animationPlayer.stop(true)
+                
         kinematicBody.move_and_slide(walkVel)

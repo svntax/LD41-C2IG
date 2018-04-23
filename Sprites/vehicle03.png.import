@@ -7,10 +7,10 @@ path="res://.import/vehicle03.png-eb8815e458e6f5f6db21cb0b8dd9298c.stex"
 [deps]
 
 source_file="res://Sprites/vehicle03.png"
-source_md5="c420461edc4d6a80e7a18819704e545b"
+source_md5="b8dbd41936f132da194439ed58e3ff6a"
 
 dest_files=[ "res://.import/vehicle03.png-eb8815e458e6f5f6db21cb0b8dd9298c.stex" ]
-dest_md5="15989bae0b9f00169cbc6ec37b224ec6"
+dest_md5="c14f6a67a36d9eae68b34e808da48645"
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/vehicle02.png-281d8dbf698350830a6aeda809c8b477.stex"
+path="res://.import/player_walk01.png-27f6655538e58b608654b6758de1a78d.stex"
 
 [deps]
 
-source_file="res://Sprites/vehicle02.png"
-source_md5="f06b5fb57f5c287437f284779d68b94a"
+source_file="res://Sprites/player_walk01.png"
+source_md5="7c9c61898821260bd7b6a34d211a6a35"
 
-dest_files=[ "res://.import/vehicle02.png-281d8dbf698350830a6aeda809c8b477.stex" ]
-dest_md5="6d5c71898898f83b1ece16269e87a91b"
+dest_files=[ "res://.import/player_walk01.png-27f6655538e58b608654b6758de1a78d.stex" ]
+dest_md5="1510de490c4dbe7c1ad586fdc6a9c66a"
 
 [params]
 

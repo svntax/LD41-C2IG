@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/enemy_controls.gd" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 16.0
+
+[node name="EnemyRoot" type="Node2D" index="0"]
+
+[node name="EnemyRigidBody" type="RigidBody2D" parent="." index="0"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = 4.0
+angular_velocity = 0.0
+angular_damp = 2.0
+script = ExtResource( 1 )
+_sections_unfolded = [ "Angular", "Linear" ]
+
+[node name="Sprite" type="Sprite" parent="EnemyRigidBody" index="0"]
+
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyRigidBody" index="1"]
+
+shape = SubResource( 1 )
+
+[node name="WanderTimer" type="Timer" parent="." index="1"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = true
+
+[connection signal="timeout" from="WanderTimer" to="EnemyRigidBody" method="_on_WanderTimer_timeout"]
+
+
