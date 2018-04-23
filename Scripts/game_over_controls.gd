@@ -14,6 +14,5 @@ func showGameOverUI():
 
 func _on_BackButton_pressed():
     get_tree().paused = false
-    print("Test")
     Globals.gameOver = false
     get_tree().change_scene("res://Scenes/main_menu.tscn")

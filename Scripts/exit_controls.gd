@@ -12,7 +12,7 @@ func _on_ExitArea_body_entered(body):
     #print(body)
     var player = get_parent().find_node("PlayerRoot").find_node("PlayerKinematicBody");
     if body==player:
-        print("Player entered Exit Zone");
+        #print("Player entered Exit Zone");
         if(not finishedLevel):
             finishedLevel = true
             Globals.levelFinished = true
