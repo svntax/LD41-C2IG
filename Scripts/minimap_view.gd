@@ -1,7 +1,7 @@
 extends Node2D
 
 var terrainGenNode
-export (int) var PIXEL_SIZE = 3
+var PIXEL_SIZE = 1
 var toggled
 var playerBody
 var playerBlink
@@ -16,7 +16,7 @@ func _ready():
     playerBody = get_parent().get_parent().find_node("PlayerRoot").find_node("PlayerKinematicBody")
     exit = get_parent().get_parent().find_node("ExitArea")
     vehicles = get_tree().get_nodes_in_group("vehicles")
-    print(vehicles);
+    #print(vehicles);
     
      
 
@@ -32,6 +32,7 @@ func _process(delta):
 func _draw():
     if(toggled and terrainGenNode):
         #Draw the solid tiles
+        PIXEL_SIZE = 2;
         var w = terrainGenNode.WIDTH
         var h = terrainGenNode.HEIGHT
         for i in range(0, w):

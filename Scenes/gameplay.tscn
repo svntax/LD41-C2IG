@@ -35,8 +35,7 @@ alignment = 1
 [node name="Minimap" type="Node2D" parent="CanvasLayer" index="1"]
 
 script = ExtResource( 4 )
-_sections_unfolded = [ "Transform" ]
-PIXEL_SIZE = 3
+_sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z Index" ]
 
 [node name="PlayerBlinkTimer" type="Timer" parent="CanvasLayer/Minimap" index="0"]
 

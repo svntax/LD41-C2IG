@@ -14,8 +14,8 @@ var regions = [];
 var regionTotals = [];
 var distanceBFS = [];
 
-var WIDTH = 50;
-var HEIGHT = 50;
+var WIDTH = 75;
+var HEIGHT = 75;
 
 class Miner:
     var x=0;
@@ -44,8 +44,8 @@ class Miner:
         self.y = abs(int(self.y) % int(self.boundY));
         
 func mineGrid():
-    var maxSteps = 450;
-    var spawnChance = 5;
+    var maxSteps = 550;
+    var spawnChance = 10;
     var miner1 = Miner.new(floor(len(binaryGrid)/2), floor(len(binaryGrid[0])/2), len(binaryGrid), len(binaryGrid[0]));
     miners.append(miner1);
     for i in range(0, maxSteps):
@@ -193,6 +193,21 @@ func calculateDistances(regionLabel, startPoint):
     #print("Average distance from location: ", valueSum/valueCount, " -- Max distance: ", maxDistance);
     #for col in distanceBFS:
     #    print(col);
+    
+
+func spawnEnemies():
+    var enemyScene = load("res://Scenes/enemy.tscn");
+    var SPAWNPROB = 0.015;
+    for i in range(0,WIDTH):
+        for j in range(0,HEIGHT):
+            if binaryGrid[i][j] == 0:
+                if distanceBFS[i][j] > 15:
+                    if randf() < SPAWNPROB:
+                        var enemy = enemyScene.instance()
+                        enemy.global_position = Vector2(i*TILE_SIZE, j*TILE_SIZE)
+                        add_child(enemy)
+                        
+                    
 
 func _ready():
     # Called every time the node is added to the scene.
@@ -223,6 +238,7 @@ func _ready():
         var vehicle = scene.instance()
         vehicle.global_position = Vector2(vehicleIndex[0]*TILE_SIZE, vehicleIndex[1]*TILE_SIZE)
         add_child(vehicle)
+        
     
     
     #for col in binaryGrid:
@@ -238,6 +254,8 @@ func _ready():
                 add_child(block)
                 row.append(block);
         grid.append(row);
+        
+    spawnEnemies();
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
