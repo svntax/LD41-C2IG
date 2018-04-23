@@ -152,6 +152,8 @@ func _on_DamageTimer_timeout():
 func damagePlayer():
     health -= 1
     SoundHandler.hurtSound.play()
+    var damageEffect = get_parent().get_parent().find_node("ColorRect")
+    damageEffect.toggleEffect()
     if(health <= 0):
         find_node("DamageTimer").stop()
         gameOverUI.showGameOverUI()

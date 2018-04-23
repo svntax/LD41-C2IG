@@ -1,15 +1,16 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/exit_object.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Terrain.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/pause_menu_ui.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scripts/minimap_view.gd" type="Script" id=5]
-[ext_resource path="res://Scenes/finish_level_ui.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/game_over_ui.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/enemy.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scripts/minimap_view.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/damage_effect.gd" type="Script" id=5]
+[ext_resource path="res://Scenes/pause_menu_ui.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/finish_level_ui.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/game_over_ui.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/enemy.tscn" type="PackedScene" id=9]
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" index="0"]
 
 [node name="ExitArea" parent="." index="0" instance=ExtResource( 1 )]
 
@@ -29,18 +30,9 @@ rotation = 0.0
 scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
-[node name="PauseMenuUI" parent="CanvasLayer" index="0" instance=ExtResource( 4 )]
+[node name="Minimap" type="Node2D" parent="CanvasLayer" index="0"]
 
-visible = false
-margin_left = 178.0
-margin_top = 141.0
-margin_right = 462.0
-margin_bottom = 239.0
-alignment = 1
-
-[node name="Minimap" type="Node2D" parent="CanvasLayer" index="1"]
-
-script = ExtResource( 5 )
+script = ExtResource( 4 )
 _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z Index" ]
 
 [node name="PlayerBlinkTimer" type="Timer" parent="CanvasLayer/Minimap" index="0"]
@@ -50,7 +42,42 @@ wait_time = 0.25
 one_shot = false
 autostart = true
 
-[node name="FinishLevelUI" parent="CanvasLayer" index="2" instance=ExtResource( 6 )]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" index="1"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 640.0
+margin_bottom = 480.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 1, 0, 0, 0.501961 )
+script = ExtResource( 5 )
+_sections_unfolded = [ "Focus", "Mouse", "Rect" ]
+
+[node name="Timer" type="Timer" parent="CanvasLayer/ColorRect" index="0"]
+
+process_mode = 1
+wait_time = 0.2
+one_shot = false
+autostart = false
+
+[node name="PauseMenuUI" parent="CanvasLayer" index="2" instance=ExtResource( 6 )]
+
+visible = false
+margin_left = 178.0
+margin_top = 141.0
+margin_right = 462.0
+margin_bottom = 239.0
+alignment = 1
+
+[node name="FinishLevelUI" parent="CanvasLayer" index="3" instance=ExtResource( 7 )]
 
 visible = false
 margin_left = 208.0
@@ -59,7 +86,7 @@ margin_right = 432.0
 margin_bottom = 236.0
 _sections_unfolded = [ "Pause", "Rect", "Size Flags", "Theme" ]
 
-[node name="GameOverUI" parent="CanvasLayer" index="3" instance=ExtResource( 7 )]
+[node name="GameOverUI" parent="CanvasLayer" index="4" instance=ExtResource( 8 )]
 
 visible = false
 margin_left = 178.0
@@ -67,12 +94,14 @@ margin_top = 159.0
 margin_right = 462.0
 margin_bottom = 221.0
 
-[node name="EnemyRoot" parent="." index="4" instance=ExtResource( 8 )]
+[node name="EnemyRoot" parent="." index="4" instance=ExtResource( 9 )]
 
 visible = false
 position = Vector2( -555.085, 424.121 )
 _sections_unfolded = [ "Transform" ]
 
 [connection signal="timeout" from="CanvasLayer/Minimap/PlayerBlinkTimer" to="CanvasLayer/Minimap" method="_on_Timer_timeout"]
+
+[connection signal="timeout" from="CanvasLayer/ColorRect/Timer" to="CanvasLayer/ColorRect" method="_on_Timer_timeout"]
 
 
