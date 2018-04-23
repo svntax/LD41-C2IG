@@ -18,6 +18,10 @@ var personCamera
 var kinematicBody
 var vehicleBody
 
+var numEnemies
+var health
+var gameOverUI
+
 var animationPlayer
 
 func _ready():
@@ -26,7 +30,10 @@ func _ready():
     kinematicBody = self
     personCamera = find_node("PersonCamera")
     vehicleBody = null
+    numEnemies = 0
+    health = 5
     animationPlayer = find_node("AnimationPlayer")
+    gameOverUI = get_parent().get_parent().find_node("GameOverUI")
 
 #General update loop
 func _process(delta):
@@ -121,3 +128,28 @@ func _physics_process(delta):
                 SoundHandler.walkingSound.stop()
                 
         kinematicBody.move_and_slide(walkVel)
+
+func _on_PlayerHitbox_body_entered(body):
+    if(body.is_in_group("enemies")):
+        if(numEnemies == 0):
+            find_node("DamageTimer").start()
+        numEnemies += 1
+        damagePlayer()
+        #print("Num enemies: %d" % numEnemies)
+
+func _on_PlayerHitbox_body_exited(body):
+    if(body.is_in_group("enemies")):
+        numEnemies -= 1
+        if(numEnemies == 0):
+            find_node("DamageTimer").stop()
+        #print("Num enemies: %d" % numEnemies)
+
+func _on_DamageTimer_timeout():
+    damagePlayer()
+    
+func damagePlayer():
+    health -= 1
+    SoundHandler.hurtSound.play()
+    if(health <= 0):
+        find_node("DamageTimer").stop()
+        gameOverUI.showGameOverUI()

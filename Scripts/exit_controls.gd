@@ -15,6 +15,7 @@ func _on_ExitArea_body_entered(body):
         print("Player entered Exit Zone");
         if(not finishedLevel):
             finishedLevel = true
+            Globals.levelFinished = true
             if(not SoundHandler.victorySound.playing):
                 SoundHandler.victorySound.play()
             finishLevelUI.show()

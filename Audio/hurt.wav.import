@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/hurt.wav-910fcde551bc46299e1038092f3be973.sample"
+
+[deps]
+
+source_file="res://Audio/hurt.wav"
+source_md5="175f1afbeedd835b8ee530323dc14e2e"
+
+dest_files=[ "res://.import/hurt.wav-910fcde551bc46299e1038092f3be973.sample" ]
+dest_md5="f1e853a4f98b4062ebe1231ee8d8622c"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

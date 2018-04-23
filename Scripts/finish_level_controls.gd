@@ -14,4 +14,5 @@ func updateTimeStat():
 func _on_NextButton_pressed():
     self.hide()
     get_tree().paused = false
+    Globals.levelFinished = false
     get_tree().reload_current_scene()

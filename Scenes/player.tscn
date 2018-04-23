@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/player_controls.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/player_idle.png" type="Texture" id=2]
@@ -37,6 +37,11 @@ animations = [ {
 "name": "default",
 "speed": 5.0
 } ]
+
+[sub_resource type="CircleShape2D" id=4]
+
+custom_solver_bias = 0.0
+radius = 20.0
 
 [node name="PlayerRoot" type="Node2D" groups=[
 "players",
@@ -102,5 +107,34 @@ scale = Vector2( 2, 2 )
 frames = SubResource( 3 )
 animation = "default"
 _sections_unfolded = [ "Transform" ]
+
+[node name="PlayerHitbox" type="Area2D" parent="PlayerKinematicBody" index="4"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_mask = 8
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerKinematicBody/PlayerHitbox" index="0"]
+
+shape = SubResource( 4 )
+
+[node name="DamageTimer" type="Timer" parent="PlayerKinematicBody" index="5"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[connection signal="body_entered" from="PlayerKinematicBody/PlayerHitbox" to="PlayerKinematicBody" method="_on_PlayerHitbox_body_entered"]
+
+[connection signal="body_exited" from="PlayerKinematicBody/PlayerHitbox" to="PlayerKinematicBody" method="_on_PlayerHitbox_body_exited"]
+
+[connection signal="timeout" from="PlayerKinematicBody/DamageTimer" to="PlayerKinematicBody" method="_on_DamageTimer_timeout"]
 
 

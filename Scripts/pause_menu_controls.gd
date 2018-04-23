@@ -4,7 +4,7 @@ func _ready():
     pass
 
 func _process(delta):
-    if(Input.is_action_just_pressed("PAUSE")):
+    if(Input.is_action_just_pressed("PAUSE") and not Globals.gameOver and not Globals.levelFinished):
         if(self.is_visible_in_tree()):
             self.hide()
             get_tree().paused = false
@@ -19,3 +19,8 @@ func _process(delta):
 func _on_StartButton_pressed():
     get_tree().paused = false
     get_tree().change_scene("res://Scenes/main_menu.tscn")
+
+
+func _on_ReturnButton_pressed():
+    self.hide()
+    get_tree().paused = false
