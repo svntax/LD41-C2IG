@@ -136,6 +136,26 @@ func pickRandomPositionInRegion(regionLabel):
                 positions.append([i,j]);
     #print("Positions array length:", len(positions));
     return(positions[randi()%len(positions)]);
+
+func pickRandomPositionInRange(regionLabel, low, high):
+    var positions = [];
+    var sum = 0;
+    var count = 0;
+    var top = 0;
+    for i in range(0,WIDTH):
+        for j in range(0,HEIGHT):
+            if distanceBFS[i][j] >= 0:
+                sum+=distanceBFS[i][j];
+                count+=1;
+            if distanceBFS[i][j] > top:
+                top = distanceBFS[i][j];
+    var average = float(sum)/float(count);
+    
+    for i in range(0,WIDTH):
+        for j in range(0,HEIGHT):
+            if distanceBFS[i][j] >= low * top and distanceBFS[i][j] <= high * top:
+                positions.append([i,j]);
+    return(positions[randi()%len(positions)]);
         
 func calculateDistances(regionLabel, startPoint):
     var delta = [startPoint];
@@ -193,6 +213,18 @@ func _ready():
     calculateDistances(regionLabel, randomIndex);
     var player = get_parent().find_node("PlayerRoot").find_node("PlayerKinematicBody");
     player.global_position = Vector2(randomIndex[0] * TILE_SIZE, randomIndex[1] * TILE_SIZE);
+    var exitIndex = pickRandomPositionInRange(regionLabel, 0.75, 1.0)
+    var exit = get_parent().find_node("ExitArea");
+    exit.global_position = Vector2(exitIndex[0] * TILE_SIZE, exitIndex[1] * TILE_SIZE);
+    
+    scene = load("res://Scenes/vehicle.tscn");
+    for x in range(0,3):
+        var vehicleIndex = pickRandomPositionInRange(regionLabel, 0.25, 0.75)
+        var vehicle = scene.instance()
+        vehicle.global_position = Vector2(vehicleIndex[0]*TILE_SIZE, vehicleIndex[1]*TILE_SIZE)
+        add_child(vehicle)
+    
+    
     #for col in binaryGrid:
     #    print(col);
     
