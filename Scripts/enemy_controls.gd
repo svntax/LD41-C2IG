@@ -35,7 +35,14 @@ func _on_WanderTimer_timeout():
         impulse = Vector2(randi() % MEANDER_MAG - MEANDER_MAG/2, randi() % MEANDER_MAG - MEANDER_MAG / 2)
     self.apply_impulse(offset, impulse)
     #Rotate enemy accordingly
-    var angle = atan(dy / dx)
+    var angle
+    if(dx == 0):
+        if(playerPos.y < self.global_position.y):
+            angle = 0
+        else:
+            angle = PI
+    else:
+        angle = atan(dy / dx)
     angle -= PI / 2
     if(playerPos.x < self.global_position.x):
         angle += PI

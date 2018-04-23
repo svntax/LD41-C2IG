@@ -69,6 +69,7 @@ position = Vector2( 273.001, 208.001 )
 
 [node name="EnemyRoot" parent="." index="4" instance=ExtResource( 8 )]
 
+visible = false
 position = Vector2( 555.085, 424.121 )
 
 [connection signal="timeout" from="CanvasLayer/Minimap/PlayerBlinkTimer" to="CanvasLayer/Minimap" method="_on_Timer_timeout"]

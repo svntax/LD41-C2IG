@@ -8,7 +8,7 @@
 custom_solver_bias = 0.0
 radius = 16.0
 
-[node name="EnemyRoot" type="Node2D"]
+[node name="EnemyRoot" type="Node2D" index="0"]
 
 [node name="EnemyRigidBody" type="RigidBody2D" parent="." index="0" groups=[
 "enemies",
