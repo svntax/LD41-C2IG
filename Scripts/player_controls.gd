@@ -34,6 +34,8 @@ func _process(delta):
         if(VEHICLE_MODE):
             #Get out of the vehicle, back to walking
             VEHICLE_MODE = false
+            if(SoundHandler.drivingSound.playing):
+                SoundHandler.drivingSound.stop()
             walkingSprite.show()
             kinematicBody.set_collision_layer_bit(0, 1)
             personCamera.make_current()
@@ -66,20 +68,31 @@ func _physics_process(delta):
         #Driving controls, uses apply_impulse() at different offsets
         #depending on whether the player is steering left and right
         #or just accelerating or braking
+        var isDriving = false
         if(Input.is_action_pressed("STEER_LEFT")):
+            isDriving = true
             vehicleBody.apply_impulse(Vector2(-8, 0), Vector2(0, STEERING_SPEED))
             vehicleBody.apply_impulse(Vector2(8, 0), Vector2(0, -STEERING_SPEED))
         if(Input.is_action_pressed("STEER_RIGHT")):
+            isDriving = true
             vehicleBody.apply_impulse(Vector2(-8, 0), Vector2(0, -STEERING_SPEED))
             vehicleBody.apply_impulse(Vector2(8, 0), Vector2(0, STEERING_SPEED))
         if(Input.is_action_pressed("DRIVE_FORWARD")):
+            isDriving = true
             var vx = cos(vehicleBody.rotation) * ACCELERATION
             var vy = sin(vehicleBody.rotation) * ACCELERATION
             vehicleBody.apply_impulse(Vector2(0, 0), Vector2(vx, vy))
         if(Input.is_action_pressed("BRAKE")):
+            isDriving = true
             var vx = cos(vehicleBody.rotation) * BRAKE_AMOUNT
             var vy = sin(vehicleBody.rotation) * BRAKE_AMOUNT
             vehicleBody.apply_impulse(Vector2(0, 0), Vector2(-vx, -vy))
+        if(isDriving):
+            if(not SoundHandler.drivingSound.playing):
+                SoundHandler.drivingSound.play()
+        else:
+            if(SoundHandler.drivingSound.playing):
+                SoundHandler.drivingSound.stop()
     else:
         walkVel.x = 0
         walkVel.y = 0

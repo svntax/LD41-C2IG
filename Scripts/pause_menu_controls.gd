@@ -12,6 +12,8 @@ func _process(delta):
             self.show()
             if(SoundHandler.walkingSound.playing):
                 SoundHandler.walkingSound.stop()
+            if(SoundHandler.drivingSound.playing):
+                SoundHandler.drivingSound.stop()
             get_tree().paused = true
 
 func _on_StartButton_pressed():

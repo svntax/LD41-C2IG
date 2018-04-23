@@ -21,4 +21,6 @@ func _on_ExitArea_body_entered(body):
             finishLevelUI.updateTimeStat()
             if(SoundHandler.walkingSound.playing):
                 SoundHandler.walkingSound.stop()
+            if(SoundHandler.drivingSound.playing):
+                SoundHandler.drivingSound.stop()
             get_tree().paused = true
