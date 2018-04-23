@@ -97,9 +97,11 @@ func _physics_process(delta):
         if(isDriving):
             if(not SoundHandler.drivingSound.playing):
                 SoundHandler.drivingSound.play()
+            vehicleBody.find_node("Particles2D").emitting = true
         else:
             if(SoundHandler.drivingSound.playing):
                 SoundHandler.drivingSound.stop()
+            vehicleBody.find_node("Particles2D").emitting = false
     else:
         walkVel.x = 0
         walkVel.y = 0

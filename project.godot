@@ -10,9 +10,9 @@ config_version=3
 
 [application]
 
-config/name="LudumDare41"
+config/name="Dungeon Drift"
 run/main_scene="res://Scenes/main_menu.tscn"
-config/icon="res://icon.png"
+config/icon="res://Sprites/zombie01.png"
 
 [autoload]
 
