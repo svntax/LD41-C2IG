@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/enemy_controls.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/zombie01.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -35,7 +35,7 @@ _sections_unfolded = [ "Angular", "Collision", "Linear" ]
 
 [node name="Sprite" type="Sprite" parent="EnemyRigidBody" index="0"]
 
-scale = Vector2( 0.5, 0.5 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
