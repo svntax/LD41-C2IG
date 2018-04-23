@@ -9,7 +9,7 @@
 [ext_resource path="res://Scenes/game_over_ui.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/enemy.tscn" type="PackedScene" id=8]
 
-[node name="Game" type="Node2D" index="0"]
+[node name="Game" type="Node2D"]
 
 [node name="ExitArea" parent="." index="0" instance=ExtResource( 1 )]
 

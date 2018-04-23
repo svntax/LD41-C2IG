@@ -1,9 +1,10 @@
 extends VBoxContainer
 
 func _ready():
-    pass
+    SoundHandler.mainMenuTheme.play()
 
 func _on_StartButton_pressed():
+    SoundHandler.mainMenuTheme.stop()
     get_tree().change_scene("res://Scenes/gameplay.tscn")
 
 func _on_QuitButton_pressed():
