@@ -8,7 +8,7 @@
 custom_solver_bias = 0.0
 radius = 16.0
 
-[node name="EnemyRoot" type="Node2D" index="0"]
+[node name="EnemyRoot" type="Node2D"]
 
 [node name="EnemyRigidBody" type="RigidBody2D" parent="." index="0"]
 
@@ -27,7 +27,7 @@ contact_monitor = false
 sleeping = false
 can_sleep = true
 linear_velocity = Vector2( 0, 0 )
-linear_damp = 4.0
+linear_damp = 2.0
 angular_velocity = 0.0
 angular_damp = 2.0
 script = ExtResource( 1 )
