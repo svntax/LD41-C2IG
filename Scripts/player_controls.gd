@@ -46,6 +46,8 @@ func _process(delta):
                 var dist = self.global_position.distance_to(v.global_position)
                 if(dist < MIN_DIST):
                     VEHICLE_MODE = true
+                    if(SoundHandler.walkingSound.playing):
+                        SoundHandler.walkingSound.stop()
                     walkingSprite.hide()
                     kinematicBody.set_collision_layer_bit(0, 0)
                     vehicleBody = v
@@ -96,9 +98,13 @@ func _physics_process(delta):
             self.rotation_degrees = 0
         if(walkVel.x != 0 or walkVel.y != 0):
             if(not animationPlayer.is_playing()):
-                animationPlayer.play("walkAnim", -1, 1.5)
+                animationPlayer.play("walkAnim", -1, 1.3)
+            if(not SoundHandler.walkingSound.playing):
+                SoundHandler.walkingSound.play()
         else:
             if(animationPlayer.is_playing()):
                 animationPlayer.stop(true)
+            if(SoundHandler.walkingSound.playing):
+                SoundHandler.walkingSound.stop()
                 
         kinematicBody.move_and_slide(walkVel)

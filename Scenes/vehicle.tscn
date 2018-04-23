@@ -68,10 +68,10 @@ anchor_mode = 1
 rotating = false
 current = false
 zoom = Vector2( 1, 1 )
-limit_left = -10000000
-limit_top = -10000000
-limit_right = 10000000
-limit_bottom = 10000000
+limit_left = -16
+limit_top = -16
+limit_right = 2384
+limit_bottom = 2384
 limit_smoothed = false
 drag_margin_h_enabled = false
 drag_margin_v_enabled = false
@@ -86,5 +86,6 @@ drag_margin_bottom = 0.2
 editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
+_sections_unfolded = [ "Limit" ]
 
 
