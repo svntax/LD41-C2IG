@@ -38,7 +38,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="PlayerRoot" type="Node2D" groups=[
+[node name="PlayerRoot" type="Node2D" index="0" groups=[
 "players",
 ]]
 
@@ -49,7 +49,7 @@ collision_layer = 1
 collision_mask = 4
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
-_sections_unfolded = [ "Angular", "Collision", "Linear" ]
+_sections_unfolded = [ "Angular", "Collision", "Linear", "collision" ]
 WALK_SPEED = 96
 STEERING_SPEED = 8
 ACCELERATION = 16

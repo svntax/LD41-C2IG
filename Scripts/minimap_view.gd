@@ -5,6 +5,7 @@ var PIXEL_SIZE = 1
 var toggled
 var playerBody
 var playerBlink
+var exitBlink
 var exit
 var vehicles
 
@@ -13,6 +14,7 @@ func _ready():
     terrainGenNode = get_parent().get_parent().find_node("TerrainGenerator")
     toggled = true
     playerBlink = 0
+    exitBlink = 0
     playerBody = get_parent().get_parent().find_node("PlayerRoot").find_node("PlayerKinematicBody")
     exit = get_parent().get_parent().find_node("ExitArea")
     vehicles = get_tree().get_nodes_in_group("vehicles")
@@ -47,7 +49,7 @@ func _draw():
         for vehicle in vehicles:
             var vehiclePos = Vector2(vehicle.global_position.x / 32, vehicle.global_position.y / 32) * PIXEL_SIZE
             var vehiclePixel = Rect2(vehiclePos, Vector2(PIXEL_SIZE, PIXEL_SIZE))
-            draw_rect(vehiclePixel, Color(0, 0, 1), true)
+            draw_rect(vehiclePixel, Color(0, 1, 1), true)
         #Draw the player
         var playerPos = Vector2(playerBody.global_position.x / 32, playerBody.global_position.y / 32) * PIXEL_SIZE
         var playerPixel = Rect2(playerPos, Vector2(PIXEL_SIZE, PIXEL_SIZE))
@@ -55,7 +57,7 @@ func _draw():
         #Draw the exit
         var exitPos = Vector2(exit.global_position.x / 32, exit.global_position.y / 32) * PIXEL_SIZE
         var exitPixel = Rect2(exitPos, Vector2(PIXEL_SIZE, PIXEL_SIZE))
-        draw_rect(exitPixel, Color(0, 1, 0), true)
+        draw_rect(exitPixel, Color(0, exitBlink, 0), true)
         
             
         
@@ -66,4 +68,8 @@ func _on_Timer_timeout():
         playerBlink = 0
     else:
         playerBlink = 1
+    if(exitBlink == 1):
+        exitBlink = 0
+    else:
+        exitBlink = 1
     update()
